@@ -1,0 +1,78 @@
+
+///////////////////////////////////////////////////////////////////////////////
+//
+//   Сборка и компиляция демона.
+//
+///////////////////////////////////////////////////////////////////////////////
+
+1. Установка библиотек:
+   Терминал:
+        sudo apt-get install build-essential
+        sudo apt-get install libssl-dev
+        sudo apt-get install libdb++-dev
+        sudo apt-get install libboost-all-dev
+        sudo apt-get install libqrencode-dev
+        sudo apt-get upgrade
+
+2. Скачать и установить библиотеку "miniupnpc" (http://miniupnp.free.fr/files/).
+   Версия обязательно: 1.6 
+   (иначе будет ошибка "error: invalid conversion from ‘int*’ to ‘unsigned char’")
+   
+   Терминал:
+            tar -xzvf miniupnpc-1.6.tar.gz
+            cd miniupnpc-1.6
+            make
+            sudo su
+            make install
+			exit
+
+3. Сборка и компиляция демона. Все библы уже должны стоять.
+   
+   Терминал:
+            cd src/
+            mkdir obj
+            cd obj
+            mkdir zerocoin
+            cd ..
+            make -f makefile.unix
+            
+   В папке src появился файл "ecocoind" - демон для unix
+   Для уменьшения размера файла в терминале: strip ecocoind
+    
+ 
+
+///////////////////////////////////////////////////////////////////////////////
+//
+//   Ошибки и их решения.
+//
+///////////////////////////////////////////////////////////////////////////////
+
+Ошибки, с которыми сталкивался я.
+
+1. net.cpp: error: invalid conversion from ‘int*’ to ‘unsigned char’
+   
+   Не верная версия библиотеки miniupnpc. Нужана старая версия 1.6. 
+   Или можно вообще отключить поддержку UPnP, для этого надо в файле makefile.unix изменить
+   строку 5 на "USE_UPNP=-".
+      
+2. Ошибка:
+   src/leveldb/libleveldb.a: No such file or directory
+   или 
+   src/leveldb/libmemenv.a: No such file or directory
+   
+   Решение в терминале:
+                       cd leveldb
+                       chmod 755 *
+                       cd ..
+
+3. ошибка:
+   fatal error: opening dependency file obj [и много других букв далее]
+   или
+   fatal error: opening dependency file obj/zerocoin [и много других букв далее]
+   
+   В папке src/ надо обязательно создать пустые папки obj, а в ней папку zerocoin
+
+
+
+
+

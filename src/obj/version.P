@@ -1,0 +1,4 @@
+obj/version.o: version.cpp version.h clientversion.h \
+ /home/ignat/coidev/ecocoin-1-4-zop/src/obj/build.h
+version.cpp version.h clientversion.h :
+ /home/ignat/coidev/ecocoin-1-4-zop/src/obj/build.h :
